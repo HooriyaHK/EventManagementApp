@@ -24,7 +24,8 @@
 
         <activity android:name=".views.SignUpActivity" />
         <activity android:name=".views.SelectUserTypeActivity" />
-        <activity android:name=".views.OrganizerHomeView" />
+        <activity android:name=".views.BrowseEventsActivity"/>
+        <activity android:name=".views.OrganizerHomeVIew" />
 
     </application>
 
