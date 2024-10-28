@@ -3,8 +3,11 @@ package com.example.goldencarrot;
 import static com.example.goldencarrot.data.model.user.UserUtils.ADMIN_TYPE;
 import static com.example.goldencarrot.data.model.user.UserUtils.ORGANIZER_TYPE;
 
+import com.example.goldencarrot.data.db.UserRepository;
 import com.example.goldencarrot.data.model.user.User;
 import com.example.goldencarrot.data.model.user.UserImpl;
+
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,6 +22,9 @@ public class UserTest {
     private String mockUsername() {
         return "BugsBunny";
     }
+    private FirebaseFirestore db;
+    private UserRepository userRepository;
+    private int userCollectionSize;
     private User mockUser(String userType) {
         try {
             newUser = new UserImpl(mockEmail(), userType, mockUsername(), null);
@@ -49,4 +55,5 @@ public class UserTest {
             User nUser = new UserImpl(mockEmail(), "InvalidType", mockUsername(), null);
         });
     }
+
 }

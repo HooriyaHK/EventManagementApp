@@ -2,11 +2,21 @@ package com.example.goldencarrot.data.db;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.example.goldencarrot.data.model.user.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +25,10 @@ import java.util.Map;
 public class UserRepository {
     private static final String TAG = "DB" ;
     private final FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+
+    private CollectionReference userCollection;
+    private List<DocumentSnapshot> listOfUsers;
 
     public UserRepository() {
         db = FirebaseFirestore.getInstance();
@@ -142,13 +156,41 @@ public class UserRepository {
     }
 
     /**
-     * Callback interface to handle Firestore query results.
+     * Callback interface to handle Firestore query results for userType.
      */
-    public interface FirestoreCallback {
+    public interface FirestoreCallbackUserType {
         void onSuccess(String userType);
         void onFailure(Exception e);
     }
+    /**
+     * Retrieves all users from the Firestore user collection
+     * @param callback a callback to handle the result
+     */
+    public void getAllUsersFromFirestore(FirestoreCallbackAllUsers callback) {
+        userCollection = db.collection("users");
+        // get all documents, code from user TomH, downloaded 24/10/24:
+        // https://stackoverflow.com/questions/50727254/how-to-retrieve-all-documents-from-a-collection-in-firestore
+        userCollection.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            listOfUsers = task.getResult().getDocuments();
+                            callback.onSuccess(listOfUsers);
+                        } else {
+                            callback.onFailure(new Exception("No users found"));
+                        }
+                    }
+                });
+    }
+    /**
+     * Callback interface to handle Firestore query results for users collection
+     */
+    public interface FirestoreCallbackAllUsers {
+        void onSuccess(List<DocumentSnapshot> listOfUsers);
 
+        void onFailure(Exception e);
+    }
     /**
      * Callback interface to handle the result of the existence check and userType retrieval.
      */
