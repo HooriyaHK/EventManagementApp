@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import java.util.Optional;
 
@@ -107,7 +108,10 @@ public class AdminAllUsersView extends AppCompatActivity {
                 DocumentSnapshot userFromDb = listOfUsers.get(i);
                 User newUser = new UserImpl(userFromDb.getString("email"),
                         userFromDb.getString("userType"),
+                        userFromDb.getString("username"),
+                        Optional.ofNullable(userFromDb.getString("phoneNumber")));
                         userFromDb.getString("name"), Optional.ofNullable(userFromDb.getString("phoneNumber")));
+
                 // add user to user data list
                 dataUserList.add(newUser);
                 Log.i(TAG, "Successfully added " + userFromDb.getString("name"));
