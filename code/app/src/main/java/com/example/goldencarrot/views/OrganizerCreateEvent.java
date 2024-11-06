@@ -70,7 +70,7 @@ public class OrganizerCreateEvent extends AppCompatActivity {
         event.setDate(date);
 
         // Add event to Firestore
-        eventRepository.addEvent(event);
+        //eventRepository.addEvent(event);
 
         Toast.makeText(this, "Event created successfully", Toast.LENGTH_SHORT).show();
 

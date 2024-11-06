@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class WaitlistController {
+public class WaitListController {
     private final WaitList waitList;
     private final WaitListRepository waitListRepository;
     private final Random random;
 
-    public WaitlistController(WaitList waitList, WaitListRepository waitListRepository) {
+    public WaitListController(WaitList waitList, WaitListRepository waitListRepository) {
         this.waitList = waitList;
         this.waitListRepository = waitListRepository;
         this.random = new Random();
@@ -32,7 +32,7 @@ public class WaitlistController {
         }
         if (added) {
             // Save the updated waitlist to the database
-            waitListRepository.addUserToWaitList(waitList.getEvent().getEventName(), user, new WaitListRepository.FirestoreCallback() {
+            waitListRepository.addUserToWaitList(waitList.getEventId(), user, new WaitListRepository.FirestoreCallback() {
                 @Override
                 public void onSuccess(Object result) {
                     System.out.println("User added to waitlist successfully in Firestore.");
@@ -67,29 +67,11 @@ public class WaitlistController {
             UserImpl winner = userArrayList.remove(winnerIndex);
             winners.add(winner);
 
-            waitListRepository.updateUserStatusInWaitList(waitList.getEvent().getEventName(), winner, "accepted");
+            waitListRepository.updateUserStatusInWaitList(waitList.getEventId(), winner, "accepted");
         }
 
         return winners;
     }
-
-
-    /**
-     * Removes a user from the waitlist.
-     *
-     * @param user the user to remove
-     * @return true if the user was removed successfully, false otherwise
-     */
-    public boolean removeUserFromLottery(UserImpl user) {
-        boolean removed = waitList.getUserArrayList().remove(user);
-        if (removed) {
-            // Update the waitlist size in Firestore
-            waitListRepository.deleteWaitList(waitList.getEvent().getEventName());
-            waitListRepository.createWaitList(waitList, waitList.getEvent().getEventName());
-        }
-        return removed;
-    }
-
 
     /**
      * Placeholder method to simulate sending a notification.
