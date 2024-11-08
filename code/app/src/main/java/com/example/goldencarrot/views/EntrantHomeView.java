@@ -73,7 +73,7 @@ public class EntrantHomeView extends AppCompatActivity {
 
 
         // Event lists and adapter Inititalization
-        upcomingEventsList =new ArrayList<>();
+        upcomingEventsList = new ArrayList<>();
         waitlistedEventsList =  new ArrayList<>();
         upcomingEventsAdapter = new EventArrayAdapter(this, upcomingEventsList);
         waitlistedEventsAdapter = new EventArrayAdapter(this, waitlistedEventsList);
