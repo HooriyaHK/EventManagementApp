@@ -28,7 +28,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
 import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 import java.util.Date;
