@@ -47,7 +47,7 @@ public class OrganizerCreateEvent extends AppCompatActivity {
     private FirebaseFirestore db;
     private UserImpl organizer;
     private boolean geolocationIsEnabled;
-    private String organizerId, facilityName, location, email, phoneNumber, facilityDescription;
+    private String organizerId, location;
 
     /**
      * Initializes the activity, sets up the UI components, and handles geolocation switch changes.
@@ -76,6 +76,8 @@ public class OrganizerCreateEvent extends AppCompatActivity {
         Button createEventButton = findViewById(R.id.createEventButton);
         Button backButton = findViewById(R.id.backButtonFromCreateEvent);
 
+        organizerId = getIntent().getStringExtra("userId");
+
         // get facility details
         getFacilityLocation();
 
@@ -97,8 +99,6 @@ public class OrganizerCreateEvent extends AppCompatActivity {
                 }
             }
         });
-        organizerId = getDeviceId(OrganizerCreateEvent.this);
-
         // Set onClickListener for the Create Event button
         createEventButton.setOnClickListener(view -> {
             createEvent();
