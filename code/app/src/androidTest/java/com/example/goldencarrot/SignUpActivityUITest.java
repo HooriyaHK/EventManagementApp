@@ -10,10 +10,13 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import android.content.Intent;
+
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+
 
 import com.example.goldencarrot.views.BrowseEventsActivity;
 import com.example.goldencarrot.views.EntrantHomeView;
@@ -88,5 +91,8 @@ public class SignUpActivityUITest {
         onView(withId(R.id.sign_up_create_account_button)).perform(click());
 
         intended(hasComponent(EntrantHomeView.class.getName()));
+
+        Intents.release();
+
     }
 }
